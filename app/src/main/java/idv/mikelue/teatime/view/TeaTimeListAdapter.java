@@ -48,7 +48,7 @@ public class TeaTimeListAdapter extends SimpleCursorAdapter {
 
 	private final Set<Integer> ruledOutSessionIds = new HashSet<Integer>(DEFAULT_CONCURRENT_TICKING_ROUNDS << 1);
 	private OnClickListener buttonListener;
-	private int shiftOfSkippedRounds = 0;
+	private SkippableCursorProxy skipptableCursorProxy = new SkippableCursorProxy("ss_id");
 
 	public TeaTimeListAdapter(Context context)
 	{
@@ -80,29 +80,14 @@ public class TeaTimeListAdapter extends SimpleCursorAdapter {
 		buttonListener = new SessionActionOnClickListener(newActionListener);
 	}
 
-	private static int colIdxOfSessionId = -1;
 	@Override
 	public void bindView(View view, Context context, Cursor cursor)
 	{
-		if (colIdxOfSessionId == -1) {
-			colIdxOfSessionId = cursor.getColumnIndex("ss_id");
-		}
-
 		/**
 		 * Rule out the view for hidden rounds
 		 */
-
 		// Move the cursor to the position skipping hidden rounds
-		cursor.moveToPosition(cursor.getPosition() + shiftOfSkippedRounds);
-
-		int sessionId = cursor.getInt(colIdxOfSessionId);
-		while (ruledOutSessionIds.contains(sessionId))
-		{
-			shiftOfSkippedRounds++;
-			cursor.moveToNext();
-
-			sessionId = cursor.getInt(colIdxOfSessionId);
-		}
+		skipptableCursorProxy.moveCursorToNonSkippedPosition();
 		// :~)
 
 		super.bindView(view, context, cursor);
@@ -127,14 +112,27 @@ public class TeaTimeListAdapter extends SimpleCursorAdapter {
 	@Override
 	public int getCount()
 	{
-		return super.getCount() - ruledOutSessionIds.size();
+		return skipptableCursorProxy == null ?
+			super.getCount() : skipptableCursorProxy.getCountOfCursor();
 	}
 
 	@Override
 	public void notifyDataSetChanged()
 	{
-		shiftOfSkippedRounds = 0;
+		skipptableCursorProxy.reset();
 		super.notifyDataSetChanged();
+	}
+
+	@Override
+	public void changeCursor(Cursor cursor)
+	{
+		/**
+		 * Prepare the proxy to provide hidden rows in Cursor
+		 */
+		skipptableCursorProxy.setCursor(cursor);
+		// :~)
+
+		super.changeCursor(cursor);
 	}
 
 	/**
@@ -144,7 +142,7 @@ public class TeaTimeListAdapter extends SimpleCursorAdapter {
 	 */
 	public void ruleOutSession(int sessionId)
 	{
-		ruledOutSessionIds.add(sessionId);
+		skipptableCursorProxy.skipRow(sessionId);
 	}
 
 	/**
@@ -154,7 +152,7 @@ public class TeaTimeListAdapter extends SimpleCursorAdapter {
 	 */
 	public void bringInSession(int sessionId)
 	{
-		ruledOutSessionIds.remove(sessionId);
+		skipptableCursorProxy.removeSkip(sessionId);
 	}
 }
 
@@ -248,5 +246,90 @@ class SessionActionOnClickListener implements OnClickListener {
 				actionListener.settingSession(sessionHolder.roundId);
 				break;
 		}
+	}
+}
+
+/**
+ * Manages the skipping data; provides {@link #moveCursor} to move the cursor
+ * to proper position which skips the hidden item
+ */
+class SkippableCursorProxy {
+	private final Set<Integer> skippedIds = new HashSet<Integer>(DEFAULT_CONCURRENT_TICKING_ROUNDS << 1);
+	private final String columnNameOfId;
+
+	private Cursor cursor;
+	private int columnIndexOfId;
+	private int shiftOfSkippedRows = 0;
+
+	SkippableCursorProxy(String newColumnNameOfId)
+	{
+		columnNameOfId = newColumnNameOfId;
+	}
+
+	/**
+	 * Adds a skipping of row while loading data from cursor.<p>
+	 *
+	 * @param idOfRow The id of row, which is defined by {@link #SkippableCursorProxy}
+	 */
+	void skipRow(int idOfRow)
+	{
+		skippedIds.add(idOfRow);
+	}
+
+	/**
+	 * Removes the skipping of row
+	 *
+	 * @param idOfRow The id of row to be undone while skipping
+	 */
+	void removeSkip(int idOfRow)
+	{
+		skippedIds.remove(idOfRow);
+	}
+
+	/**
+	 * Gets the count of {@link Cursor}, which excludes the skipped rows.<p>
+	 *
+	 * @return The number of rows without skipped ones
+	 */
+	int getCountOfCursor()
+	{
+		return cursor == null ? 0 : cursor.getCount() -
+			skippedIds.size();
+	}
+
+	/**
+	 * Moves the {@link Cursor} to proper position, which skips the set
+	 * rows.<p>
+	 */
+	void moveCursorToNonSkippedPosition()
+	{
+		// Move the cursor to the position skipping hidden rounds
+		cursor.moveToPosition(cursor.getPosition() + shiftOfSkippedRows);
+
+		int rowId = cursor.getInt(columnIndexOfId);
+		while (skippedIds.contains(rowId))
+		{
+			++shiftOfSkippedRows;
+			cursor.moveToNext();
+
+			rowId = cursor.getInt(columnIndexOfId);
+		}
+		// :~)
+	}
+
+	void setCursor(Cursor newCursor)
+	{
+		cursor = newCursor;
+
+		columnIndexOfId = cursor == null ? -1 :
+			cursor.getColumnIndex(columnNameOfId);
+	}
+
+	/**
+	 * Reset the skipping.<p>
+	 */
+	void reset()
+	{
+		shiftOfSkippedRows = 0;
 	}
 }
