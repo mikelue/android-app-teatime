@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<idv.mikelue.teatime.view.ChangeTimeDialog xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/dialog_main"
+>
+	<TextView android:id="@+id/label_minutes" style="@style/label_time_editor"
+		android:layout_alignParentTop="true"
+		android:layout_alignLeft="@id/editor_minutes"
+
+		android:text="@string/label_minutes"
+	/>
+	<TextView android:id="@+id/label_seconds" style="@style/label_time_editor"
+		android:layout_alignParentTop="true"
+		android:layout_alignLeft="@id/editor_seconds"
+
+		android:text="@string/label_seconds"
+	/>
+
+	<idv.mikelue.teatime.view.DigitalNumberEditView
+		android:id="@id/editor_minutes" style="@style/text_time_editor"
+
+		android:layout_below="@id/label_minutes"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="16dp"
+	/>
+	<idv.mikelue.teatime.view.DigitalNumberEditView
+		android:id="@id/editor_seconds" style="@style/text_time_editor"
+
+		android:layout_below="@id/label_seconds"
+		android:layout_toRightOf="@id/editor_minutes"
+		android:layout_marginLeft="4dp"
+	/>
+
+	<ImageButton android:id="@+id/button_increase_time" style="@style/button_change_time"
+		android:src="@drawable/increase"
+		android:layout_below="@id/label_seconds"
+		android:layout_marginTop="-6dp"
+	/>
+	<ImageButton android:id="@+id/button_decrease_time" style="@style/button_change_time"
+		android:src="@drawable/decrease"
+		android:layout_below="@id/button_increase_time"
+	/>
+	<idv.mikelue.teatime.view.DigitalNumberTextView
+		android:id="@+id/changing_time"
+
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+
+		android:layout_above="@id/affect_successive_rounds"
+		android:layout_toRightOf="@id/button_decrease_time"
+		android:layout_marginBottom="16dp"
+		android:layout_marginLeft="8dp"
+
+		android:textSize="18sp"
+	/>
+
+	<CheckBox android:id="@id/affect_successive_rounds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+		android:layout_below="@id/editor_minutes"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="16dp"
+
+		android:text="@string/checkbox_affects_successive_rounds"
+	/>
+</idv.mikelue.teatime.view.ChangeTimeDialog>

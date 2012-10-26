@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="idv.mikelue.teatime">
+
+	<uses-permission android:name="android.permission.VIBRATE"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+	<uses-sdk android:minSdkVersion="10"/>
+
+	<application android:debuggable="false" android:icon="@drawable/app" android:label="@string/app_name">
+		<activity android:launchMode="singleTask" android:name=".TeaTimeActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+
+		<activity android:name=".SessionActivity" android:windowSoftInputMode="stateHidden"/>
+		<activity android:name=".SettingActivity"/>
+
+		<service android:name=".TimerService"/>
+	</application>
+</manifest>

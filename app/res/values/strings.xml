@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<resources>
+	<string name="app_name">Tea Time</string>
+
+    <!--
+      - Name of models
+      -->
+    <string name="model_session">Sessions</string>
+    <!-- :~) -->
+
+	<!--
+	  - Text showed on preference setting
+	  -->
+	<string name="preference_alarm_sound">Play sound while alarming</string>
+	<string name="preference_alarm_vibration">Vibrate while alarming</string>
+	<string name="preference_alarm_duration">Duration of alarming</string>
+	<!-- :~) -->
+
+	<!--
+	  - Messages in application
+	  -->
+    <string name="message_remove_last_round">Can\'t remove last round</string>
+    <string name="message_too_much_round">Can\'t add more than 99 rounds</string>
+    <string name="message_remove_session">Remove this session?</string>
+    <string name="message_remove_session_successfully">Session "%s" has been removed</string>
+    <string name="message_session_has_been_saved">Session "%s" has been saved</string>
+    <string name="message_save_session_modification">Save modification?</string>
+    <string name="message_cancel_session_modification">Cancel modification?</string>
+    <string name="message_choose_a_color">Choose a color</string>
+    <string name="message_need_session_name">Need name of session</string>
+    <string name="message_seconds">%s Seconds</string>
+	<!-- :~) -->
+
+	<!--
+	  - Text of header
+	  -->
+    <string name="header_ticking">Ticking...</string>
+	<!-- :~) -->
+
+	<!--
+	  - Buttons in application
+	  -->
+    <string name="button_ok">Yes</string>
+    <string name="button_cancel">No</string>
+    <string name="button_reset">Reset</string>
+    <string name="button_skip">Skip</string>
+    <string name="button_setting">Setting</string>
+    <string name="button_save_session">Save</string>
+    <string name="button_cancel_session_edit">Cancel</string>
+    <string name="button_add_new_session">Add New</string>
+	<!-- :~) -->
+
+    <string name="checkbox_affects_successive_rounds">Affects successive rounds</string>
+
+    <!--
+      - Labels in application
+      -->
+    <string name="label_minutes">Min(s)</string>
+    <string name="label_seconds">Sec(s)</string>
+    <!-- :~) -->
+
+	<!--
+	  - Text of default value
+	  -->
+	<string name="default_session_name">New Session Name</string>
+	<!-- :~) -->
+</resources>

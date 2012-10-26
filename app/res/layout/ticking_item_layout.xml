@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/item_layout"
+>
+	<idv.mikelue.teatime.view.DigitalNumberTextView
+		android:id="@+id/ticking_time"
+		android:layout_marginLeft="@dimen/marging_in_item"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+
+		android:paddingTop="8dp"
+		android:paddingBottom="8dp"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+		android:gravity="center"
+		android:background="@drawable/ticking_background"
+
+		android:textScaleX="1.3"
+		android:textSize="26sp"
+	/>
+
+	<TextView android:id="@id/text_session_name" style="@style/text_session_name_no_scroll"
+		android:layout_width="154dp"
+		android:layout_toRightOf="@id/ticking_time"
+	/>
+	<idv.mikelue.teatime.view.DigitalNumberTextView
+		android:id="@id/text_session_state" style="@style/text_session_state_no_scroll"
+		android:layout_width="154dp"
+		android:layout_toRightOf="@id/ticking_time"
+		android:layout_below="@id/text_session_name"
+	/>
+
+	<ImageButton android:id="@+id/button_cancel" style="@style/icon_button"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/stop"
+	/>
+</RelativeLayout>

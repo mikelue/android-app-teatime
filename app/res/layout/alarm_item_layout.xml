@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/item_layout"
+>
+	<ImageView android:id="@id/session_icon" style="@style/session_icon" />
+
+	<TextView android:id="@id/text_session_name" style="@style/text_session_name_no_scroll"
+		android:layout_width="224dp"
+		android:layout_toRightOf="@id/session_icon"
+	/>
+	<idv.mikelue.teatime.view.DigitalNumberTextView
+		android:id="@id/text_session_state" style="@style/text_session_state_no_scroll"
+		android:layout_width="224dp"
+		android:layout_toRightOf="@id/session_icon"
+		android:layout_below="@id/text_session_name"
+	/>
+
+	<ImageButton android:id="@+id/button_ok" style="@style/icon_button"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ok"
+	/>
+</RelativeLayout>

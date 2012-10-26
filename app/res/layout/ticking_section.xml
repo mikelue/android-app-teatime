@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<idv.mikelue.teatime.view.TickingSection xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/section_ticking"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:visibility="gone"
+>
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/section_ticking_header"
+		style="@style/section_header_layout"
+		android:visibility="gone"
+	>
+		<ImageView style="@style/section_header_icon"
+			android:src="@drawable/section_ticking"
+		/>
+		<TextView style="@style/section_header_text"
+			android:text="@string/header_ticking"
+		/>
+	</RelativeLayout>
+</idv.mikelue.teatime.view.TickingSection>

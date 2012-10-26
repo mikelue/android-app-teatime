@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<resources>
+	<dimen name="session_icon_stroke_width">1dp</dimen>
+	<dimen name="session_icon_corner_radius">4dp</dimen>
+
+	<dimen name="item_margin_top">2dp</dimen>
+
+	<dimen name="marging_in_section">4dp</dimen>
+	<dimen name="marging_in_item">8dp</dimen>
+
+	<dimen name="general_border">1dp</dimen>
+	<dimen name="general_border_shift">1dp</dimen>
+	<dimen name="general_border_hidden_shift">-2dp</dimen>
+</resources>

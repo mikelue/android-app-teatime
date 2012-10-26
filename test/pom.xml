@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<parent>
+		<groupId>idv.mikelue</groupId>
+		<artifactId>teatime-parent</artifactId>
+		<version>1.0</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>idv.mikelue</groupId>
+    <artifactId>tea-time-test</artifactId>
+    <version>1.0</version>
+    <packaging>apk</packaging>
+
+    <dependencies>
+		<!--
+          - Dependencies of Andoird system
+		  -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>support-v4</artifactId>
+            <scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android-test</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- :~) -->
+
+		<!--
+		  - The target app of testing
+		  -->
+		<dependency>
+			<groupId>idv.mikelue</groupId>
+			<artifactId>tea-time</artifactId>
+			<version>1.0</version>
+			<type>apk</type>
+		</dependency>
+		<dependency>
+			<groupId>idv.mikelue</groupId>
+			<artifactId>tea-time</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+			<type>jar</type>
+		</dependency>
+		<!-- :~) -->
+
+		<dependency>
+			<groupId>com.googlecode.jmockit</groupId>
+			<artifactId>jmockit</artifactId>
+		</dependency>
+	</dependencies>
+</project>

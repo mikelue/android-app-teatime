@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/item_layout"
+>
+	<idv.mikelue.teatime.view.AdjustableWidthTextView android:id="@+id/round_sequence"
+		style="@style/text_round_component"
+
+		android:layout_width="30dp"
+		android:layout_alignParentLeft="true"
+		android:gravity="center_horizontal|bottom"
+		android:textColor="@color/round_text"
+	/>
+
+	<idv.mikelue.teatime.view.DigitalNumberTextView android:id="@+id/number_of_rounds"
+		android:layout_height="32dp"
+		android:layout_width="wrap_content"
+		android:layout_toRightOf="@id/round_sequence"
+		android:layout_alignParentBottom="true"
+		android:layout_marginBottom="@dimen/marging_in_item"
+
+		android:gravity="bottom"
+		android:textSize="13sp"
+	/>
+
+	<idv.mikelue.teatime.view.DigitalNumberTextView
+		android:id="@+id/round_time" style="@style/text_round_component"
+		android:layout_width="78dp"
+		android:layout_toRightOf="@id/number_of_rounds"
+
+		android:paddingLeft="4dp"
+		android:paddingRight="4dp"
+		android:gravity="center"
+		android:textColor="@color/round_text"
+
+		android:background="@drawable/edit_time_background"
+	/>
+
+	<ImageButton style="@style/icon_button"
+		android:id="@id/button_remove_round"
+		android:layout_toLeftOf="@id/button_add_round"
+		android:src="@drawable/remove"
+	/>
+	<ImageButton android:id="@id/button_add_round" style="@style/icon_button"
+		android:layout_toLeftOf="@id/button_setting"
+		android:src="@drawable/add_round"
+	/>
+	<ImageButton android:id="@id/button_setting" style="@style/icon_button"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/settings"
+	/>
+</RelativeLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<resources>
+    <string name="model_session">計時組</string>
+
+	<!--
+	  - Messages in application
+	  -->
+    <string name="message_remove_last_round">不可移除最後一個計時器</string>
+    <string name="message_too_much_round">超過 99 個計時器</string>
+    <string name="message_remove_session">確定要移除此計時組?</string>
+    <string name="message_remove_session_successfully">計時組「%s」已移除</string>
+    <string name="message_session_has_been_saved">計時組「%s」已儲存</string>
+    <string name="message_save_session_modification">儲存修改?</string>
+    <string name="message_cancel_session_modification">放棄修改?</string>
+    <string name="message_choose_a_color">選擇顏色</string>
+    <string name="message_need_session_name">需要計時組名稱</string>
+    <string name="message_seconds">%s 秒</string>
+	<!-- :~) -->
+
+	<!--
+	  - Text showed on preference setting
+	  -->
+	<string name="preference_alarm_sound">響鈴時播放音效</string>
+	<string name="preference_alarm_vibration">響鈴時振動</string>
+	<string name="preference_alarm_duration">響鈴時間</string>
+	<!-- :~) -->
+
+	<!--
+	  - Text of header
+	  -->
+    <string name="header_ticking">計時中...</string>
+	<!-- :~) -->
+
+	<!--
+	  - Buttons in application
+	  -->
+    <string name="button_ok">確定</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_reset">重設</string>
+    <string name="button_skip">跳過</string>
+    <string name="button_setting">設定</string>
+    <string name="button_save_session">儲存</string>
+    <string name="button_cancel_session_edit">離開</string>
+    <string name="button_add_new_session">新增</string>
+	<!-- :~) -->
+
+    <string name="checkbox_affects_successive_rounds">同時修改後續的計時器</string>
+
+    <string name="label_minutes">分鐘</string>
+    <string name="label_seconds">秒</string>
+
+	<!--
+	  - Text of default value
+	  -->
+	<string name="default_session_name">新計時組</string>
+	<!-- :~) -->
+</resources>

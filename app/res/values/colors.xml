@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<resources>
+	<!--
+	  - Colors for Icon
+	  -->
+	<color name="session_icon_border">#B9B9B9</color>
+
+	<color name="session_icon_type_1">#D7FFAF</color>
+	<color name="session_icon_type_2">#FFAFAF</color>
+	<color name="session_icon_type_3">#AFFFC3</color>
+	<color name="session_icon_type_4">#FFEBAF</color>
+	<color name="session_icon_type_5">#D7AFFF</color>
+	<color name="session_icon_type_6">#AFFFFF</color>
+	<color name="session_icon_type_7">#FFAFEB</color>
+	<color name="session_icon_type_8">#AFC3FF</color>
+	<!-- :~) -->
+
+	<!--
+	  - Colors for section
+	  -->
+	<color name="section_text">#99CC00</color>
+	<color name="section_text_sub">#B3CC66</color>
+	<!-- :~) -->
+
+	<!--
+	  - Colors for time displaying
+	  -->
+	<color name="time_negative">#FF4444</color>
+	<color name="time_positive">#99CC00</color>
+	<!-- :~) -->
+
+	<color name="round_text">#FFFFFF</color>
+
+	<!--
+	  - Colors for buttons
+	  -->
+	<color name="button_normal">#00FFFFFF</color>
+	<color name="button_pressed">#4099CC00</color>
+
+	<color name="bottom_button_normal">#40FFFFFF</color>
+	<color name="bottom_button_pressed">#00FFFFFF</color>
+	<!-- :~) -->
+</resources>

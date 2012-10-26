@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+
+<resources>
+	<!--
+	  - Styles for section
+	  -->
+	<style name="section_layout">
+		<item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+	</style>
+
+	<style name="section_header_layout">
+		<item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">34dp</item>
+		<item name="android:background">@drawable/section_background</item>
+	</style>
+
+	<style name="section_header_icon">
+		<item name="android:id">@id/section_icon</item>
+		<item name="android:layout_height">26dp</item>
+		<item name="android:layout_width">26dp</item>
+		<item name="android:layout_alignParentLeft">true</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:layout_marginLeft">@dimen/marging_in_section</item>
+	</style>
+
+	<style name="section_header_text">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_toRightOf">@id/section_icon</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:layout_marginLeft">@dimen/marging_in_section</item>
+
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/section_text</item>
+	</style>
+	<!-- :~) -->
+
+	<!--
+	  - Layout for item showed in ListView
+	  -->
+	<style name="item_layout">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">48dp</item>
+	</style>
+	<!-- :~) -->
+
+	<style name="text_view">
+        <item name="android:layout_height">wrap_content</item>
+	</style>
+	<!-- :~) -->
+
+	<!--
+	  - Styles for displaying name of session
+	  -->
+	<style name="text_session_name" parent="@style/text_view">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">@android:color/primary_text_dark</item>
+	</style>
+
+	<style name="text_session_name_no_scroll" parent="@style/text_session_name">
+		<item name="android:singleLine">true</item>
+		<item name="android:layout_alignParentTop">true</item>
+		<item name="android:layout_marginTop">4dp</item>
+		<item name="android:layout_marginLeft">8dp</item>
+	</style>
+	<!-- :~) -->
+
+	<!--
+	  - Styles for displaying state of session
+	  -->
+	<style name="text_session_state" parent="text_view">
+		<item name="android:textSize">14sp</item>
+	</style>
+	<style name="text_session_state_no_scroll" parent="text_session_state">
+		<item name="android:layout_marginLeft">8dp</item>
+	</style>
+	<!-- :~) -->
+
+	<!--
+	  - Styles for text showed in round
+	  -->
+	<style name="text_round_component">
+		<item name="android:layout_height">32dp</item>
+		<item name="android:layout_alignParentBottom">true</item>
+		<item name="android:layout_marginLeft">@dimen/marging_in_item</item>
+		<item name="android:layout_marginBottom">@dimen/marging_in_item</item>
+
+		<item name="android:textSize">26sp</item>
+	</style>
+	<!-- :~) -->
+
+
+	<!--
+	  - Styles for Icon
+	  -->
+	<style name="default_icon">
+        <item name="android:src">@drawable/session</item>
+	</style>
+
+	<style name="choose_icon" parent="default_icon">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+	</style>
+
+	<style name="session_icon" parent="default_icon">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+		<item name="android:layout_marginLeft">8dp</item>
+		<item name="android:layout_centerVertical">true</item>
+	</style>
+	<!-- :~) -->
+
+	<!--
+	  - Styles for buttons
+	  -->
+	<style name="icon_button">
+		<item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:layout_marginRight">8dp</item>
+		<item name="android:background">@drawable/image_button_background</item>
+	</style>
+	<!-- :~) -->
+
+	<!--
+	  - Styles for buttons at the bottom of screen
+	  -->
+	<style name="button_at_bottom">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+		<item name="android:background">@drawable/bottom_button_background</item>
+		<item name="android:layout_marginTop">2dp</item>
+
+        <item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/section_text</item>
+	</style>
+	<!-- :~) -->
+
+	<!--
+	  - Styles for dialog of changing time
+	  -->
+	<style name="button_change_time">
+		<item name="android:layout_width">32dp</item>
+		<item name="android:layout_height">32dp</item>
+
+		<item name="android:layout_toRightOf">@id/editor_seconds</item>
+		<item name="android:layout_marginLeft">8dp</item>
+		<item name="android:background">#00FFFFFF</item>
+	</style>
+
+	<style name="label_time_editor">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_marginLeft">8dp</item>
+		<item name="android:layout_toRightOf">@id/editor_seconds</item>
+		<item name="android:textColor">#33B5E5</item>
+	</style>
+
+	<style name="text_time_editor_base">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_marginTop">2dp</item>
+		<item name="android:layout_marginBottom">8dp</item>
+		<item name="android:padding">8dp</item>
+		<item name="android:textSize">34sp</item>
+		<item name="android:inputType">number</item>
+		<item name="android:maxLength">3</item>
+		<item name="android:textColor">#FFFFFF</item>
+		<item name="android:background">@drawable/edit_time_background</item>
+	</style>
+
+	<style name="text_time_editor" parent="text_time_editor_base">
+	</style>
+	<!-- :~) -->
+</resources>

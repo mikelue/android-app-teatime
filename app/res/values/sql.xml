@@ -1,0 +1,409 @@
+<?xml version="1.0" ?>
+
+<resources>
+	<!--
+	  - SQL DML for modification of session
+	  -->
+	<string name="sql.dml.listSessions">
+		SELECT ss.ss_id AS _id, ss.*,
+			next_sr.sr_id AS id_of_next_round,
+			next_sr.sr_seconds AS seconds_of_next_round
+		FROM
+			(
+				SELECT ss.ss_id, ss.ss_name, ss.ss_icon_type, ss.ss_time_last_used,
+					ss.ss_number_of_rounds,
+					/**
+					 * Figure out the next round for ticking of session
+					 */
+					CASE
+					WHEN ss.ss_number_of_ended_rounds = ss.ss_number_of_rounds
+						THEN 1
+					ELSE
+						ss.ss_number_of_ended_rounds + 1
+					END AS next_sequence_of_round
+					/* :~) */
+				FROM tt_session AS ss
+			) AS ss
+			INNER JOIN
+			tt_session_round AS next_sr
+			ON ss.ss_id = sr_ss_id
+				AND next_sr.sr_sequence = ss.next_sequence_of_round
+		ORDER BY ss.ss_time_last_used DESC,
+			ss.ss_id DESC
+	</string>
+	<string name="sql.dml.listRounds">
+		SELECT sr_id, sr_sequence, sr_seconds, lt_time_last_reached
+		FROM tt_session_round AS sr
+			LEFT OUTER JOIN
+			tt_last_tick AS lt
+			ON sr.sr_id = lt.lt_sr_id
+		WHERE sr.sr_ss_id = ?
+		ORDER BY sr_sequence ASC
+	</string>
+	<string name="sql.dml.insertSession">
+		INSERT INTO tt_session(ss_name, ss_icon_type)
+		VALUES(?, ?)
+	</string>
+	<string name="sql.dml.updateSession">
+		UPDATE tt_session
+		SET ss_name = ?,
+			ss_icon_type = ?
+		WHERE ss_id = ?
+	</string>
+	<string name="sql.dml.getNextRoundIdOfSession">
+		SELECT sr_id
+		FROM tt_session_round
+		WHERE sr_ss_id = ?
+			AND sr_sequence = (
+				SELECT
+					/**
+					 * Figure out the next round for ticking of session
+					 */
+					CASE
+					WHEN ss.ss_number_of_ended_rounds = ss.ss_number_of_rounds
+						THEN 1
+					ELSE
+						ss.ss_number_of_ended_rounds + 1
+					END
+					/* :~) */
+				FROM tt_session AS ss
+				WHERE ss_id = ?
+			)
+	</string>
+	<string name="sql.dml.resetLastRound">
+		DELETE FROM tt_last_tick
+		WHERE lt_sr_id = (
+			SELECT sr_id
+			FROM tt_session_round
+			wHERE sr_ss_id = ?
+				AND sr_sequence = (
+					SELECT
+						/**
+						 * Figure out the previous round for resetting
+						 * If there is no ended round in session, the resetting do nothing.
+						 * Value of "-1" indicates non-existent id of round
+						 */
+						CASE
+						WHEN ss.ss_number_of_ended_rounds = 0
+							THEN -1
+						ELSE
+							ss.ss_number_of_ended_rounds
+						END
+						/* :~) */
+					FROM tt_session AS ss
+					WHERE ss.ss_id = ?
+				)
+		)
+	</string>
+	<string name="sql.dml.removeRoundsInSession">
+		DELETE FROM tt_session_round
+		WHERE sr_ss_id = ?
+	</string>
+	<string name="sql.dml.insertRound">
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES(?, ?, ?)
+	</string>
+	<string name="sql.dml.resetNumberOfEndedRounds">
+		UPDATE tt_session
+		SET ss_number_of_ended_rounds = 0
+		WHERE ss_id = ?
+	</string>
+	<string name="sql.dml.cleanRecordsOfFinishedSession">
+		DELETE FROM tt_last_tick
+		WHERE lt_sr_id IN (
+			SELECT sr_id
+			FROM tt_session_round
+			WHERE sr_ss_id = (
+				SELECT sr_ss_id
+				FROM tt_session_round
+					INNER JOIN
+					tt_session
+					ON sr_id = ?
+						AND sr_ss_id = ss_id
+						AND ss_number_of_ended_rounds = ss_number_of_rounds
+			)
+		)
+	</string>
+	<string name="sql.dml.insertTickingRecord">
+		INSERT INTO tt_last_tick(lt_sr_id, lt_time_last_reached)
+		VALUES(?, ?)
+	</string>
+	<string name="sql.dml.updateTimeOfLastUsing">
+		UPDATE tt_session
+		SET ss_time_last_used = ?
+		WHERE ss_id = ?
+	</string>
+	<string name="sql.dml.updateTimeOfLastUsingFromRound">
+		UPDATE tt_session
+		SET ss_time_last_used = ?
+		WHERE ss_id = (
+			SELECT sr_ss_id
+			FROM tt_session_round
+			WHERE sr_id = ?
+		)
+	</string>
+	<string name="sql.dml.removeSession">
+		DELETE FROM tt_session
+		WHERE ss_id = ?
+	</string>
+	<!-- :~) -->
+
+	<!--
+	  - Version 1 schema
+	  -->
+	<string-array name="sql_schema_v1">
+		<item>
+		CREATE TABLE tt_session(
+			ss_id INTEGER PRIMARY KEY AUTOINCREMENT,
+			ss_name TEXT NOT NULL,
+			ss_icon_type TEXT NOT NULL CHECK(ss_icon_type IN (\'1\', \'2\', \'3\', \'4\', \'5\', \'6\', \'7\', \'8\')),
+			ss_time_last_used INTEGER,
+			ss_number_of_rounds INTEGER NOT NULL DEFAULT 0,
+			ss_number_of_ended_rounds INTEGER NOT NULL DEFAULT 0
+		);
+		</item>
+		<item>
+		CREATE TABLE tt_session_round(
+			sr_id INTEGER PRIMARY KEY AUTOINCREMENT,
+			sr_ss_id INTEGER NOT NULL
+				REFERENCES tt_session(ss_id)
+				ON DELETE CASCADE,
+			sr_sequence INTEGER NOT NULL,
+			sr_seconds INTEGER NOT NULL,
+			UNIQUE(sr_ss_id, sr_sequence)
+		);
+		</item>
+		<item>
+		CREATE TRIGGER tri_tt_session__increase__ss_number_of_rounds
+			AFTER INSERT ON tt_session_round
+		BEGIN
+			UPDATE tt_session
+			SET ss_number_of_rounds = ss_number_of_rounds + 1
+			WHERE ss_id = NEW.sr_ss_id;
+		END
+		</item>
+		<item>
+		CREATE TRIGGER tri_tt_session__decrease__ss_number_of_rounds
+			AFTER DELETE ON tt_session_round
+		BEGIN
+			UPDATE tt_session
+			SET ss_number_of_rounds = ss_number_of_rounds - 1
+			WHERE ss_id = OLD.sr_ss_id;
+		END
+		</item>
+		<item>
+		CREATE TABLE tt_last_tick(
+			lt_sr_id INTEGER PRIMARY KEY
+				REFERENCES tt_session_round(sr_id)
+				ON DELETE CASCADE,
+			lt_time_last_reached INTEGER NOT NULL
+		)
+		</item>
+		<item>
+		CREATE TRIGGER tri_tt_session__increase__ss_number_of_ended_rounds
+			AFTER INSERT ON tt_last_tick
+		BEGIN
+			UPDATE tt_session
+			SET ss_number_of_ended_rounds = ss_number_of_ended_rounds + 1
+			WHERE ss_id = (
+				SELECT sr.sr_ss_id
+				FROM tt_session_round AS sr
+				WHERE sr.sr_id = NEW.lt_sr_id
+			);
+		END
+		</item>
+		<item>
+		CREATE TRIGGER tri_tt_session__decrease__ss_number_of_ended_rounds
+			AFTER DELETE ON tt_last_tick
+		BEGIN
+			UPDATE tt_session
+			SET ss_number_of_ended_rounds = ss_number_of_ended_rounds - 1
+			WHERE ss_id = (
+				SELECT sr.sr_ss_id
+				FROM tt_session_round AS sr
+				WHERE sr.sr_id = OLD.lt_sr_id
+			);
+		END
+		</item>
+	</string-array>
+	<!-- :~) -->
+
+	<!--
+	  - Version 1 default data
+	  -
+	  - There are two pre-built sessions.
+	  -->
+	<string-array name="sql_defaultData_v1">
+		<!--
+		  - First pre-built session.
+		  -->
+		<item>
+		INSERT INTO tt_session(ss_name, ss_icon_type)
+		VALUES(\'綠茶\', \'1\');
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (1, 1, 35);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (1, 2, 35);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (1, 3, 90);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (1, 4, 180);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (1, 5, 300);
+		</item>
+		<!-- :~) -->
+
+		<!--
+		  - Second pre-built session.
+		  -->
+		<item>
+		INSERT INTO tt_session(ss_name, ss_icon_type)
+		VALUES(\'烏龍茶\', \'2\');
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (2, 1, 35);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (2, 2, 25);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (2, 3, 35);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (2, 4, 60);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (2, 5, 95);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (2, 6, 150);
+		</item>
+		<item>
+		INSERT INTO tt_session_round(sr_ss_id, sr_sequence, sr_seconds)
+		VALUES (2, 7, 240);
+		</item>
+		<!-- :~) -->
+	</string-array>
+	<!-- :~) -->
+
+	<!--
+	  - Stopgap schema for modification of rounds
+	  -->
+	<string name="sql.schema.inmemory.rounds">
+		<!--
+		  - rd_src_id - The id of source round which is persisted in database
+		  - 	or the fake id of added round
+		  -->
+		CREATE TABLE sg_round(
+			rd_id INTEGER PRIMARY KEY,
+			rd_time_last_reached INTEGER,
+			rd_sequence INTEGER NOT NULL,
+			rd_seconds INTEGER NOT NULL
+		);
+		<!-- :~) -->
+	</string>
+	<string name="sql.dml.inmemory.setSeconds">
+		UPDATE sg_round
+		SET rd_seconds = ?
+		WHERE rd_id = ?
+	</string>
+	<string name="sql.dml.inmemory.findRound">
+		SELECT rd_sequence, rd_seconds
+		FROM sg_round
+		WHERE rd_id = ?
+	</string>
+	<!--
+	  - Ensure that the final value of seconds is in valid range
+	  -->
+	<string name="sql.dml.inmemory.changeSecondsOfConsecutiveRoundsBy">
+		UPDATE sg_round
+		SET rd_seconds = max(?, min(?, rd_seconds + ?))
+		WHERE rd_sequence > ?
+	</string>
+	<!-- :~) -->
+	<string name="sql.dml.inmemory.listRounds">
+		SELECT rd_id AS _id, rd_id, rd_sequence, rd_seconds, rd_time_last_reached
+		FROM sg_round
+		ORDER BY rd_sequence ASC
+	</string>
+	<!--
+	  - 1. Reset the ended rounds since the new round
+	  - 2. Increase the sequence of consecutive rounds
+	  -->
+	<string name="sql.dml.inmemory.putBackConsecutiveRounds">
+		UPDATE sg_round
+		SET rd_sequence = rd_sequence + 1,
+			rd_time_last_reached = NULL
+		WHERE rd_sequence > (
+			SELECT rd_sequence
+			FROM sg_round
+			WHERE rd_id = ?
+		)
+	</string>
+	<!-- :~) -->
+	<string name="sql.dml.inmemory.resetConsecutiveRounds">
+		UPDATE sg_round
+		SET rd_time_last_reached = NULL
+		WHERE rd_sequence >= (
+			SELECT rd_sequence
+			FROM sg_round
+			WHERE rd_id = ?
+		)
+	</string>
+	<string name="sql.dml.inmemory.skipPredecessorRounds">
+		UPDATE sg_round
+		SET rd_time_last_reached = datetime(\'now\', \'unixepoch\')
+		WHERE rd_time_last_reached IS NULL
+			AND rd_sequence &lt;= (
+				SELECT rd_sequence
+				FROM sg_round
+				WHERE rd_id = ?
+			)
+	</string>
+	<string name="sql.dml.inmemory.syncRound">
+		INSERT INTO sg_round(rd_id, rd_sequence, rd_seconds, rd_time_last_reached)
+		VALUES(?, ?, ?, ?);
+	</string>
+	<string name="sql.dml.inmemory.insertRound">
+		INSERT INTO sg_round(rd_id, rd_sequence, rd_seconds)
+		VALUES(?, ?, ?);
+	</string>
+	<string name="sql.dml.inmemory.copyRound">
+		INSERT INTO sg_round(rd_id, rd_sequence, rd_seconds)
+		SELECT ?, rd_sequence + 1, rd_seconds
+		FROM sg_round
+		WHERE rd_id = ?
+	</string>
+	<string name="sql.dml.inmemory.removeRound">
+		DELETE FROM sg_round
+		WHERE rd_id = ?
+	</string>
+
+	<string-array name="sql_dml_inmemory_defaultRounds">
+		<item>
+			INSERT INTO sg_round(rd_id, rd_sequence, rd_seconds)
+			VALUES(?, 1, 35);
+		</item>
+		<item>
+			INSERT INTO sg_round(rd_id, rd_sequence, rd_seconds)
+			VALUES(?, 2, 50);
+		</item>
+	</string-array>
+	<!-- :~) -->
+</resources>

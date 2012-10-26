@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:bottom="@dimen/general_border_shift" android:left="@dimen/general_border_hidden_shift"
+        android:right="@dimen/general_border_hidden_shift" android:top="@dimen/general_border_hidden_shift">
+		<shape android:shape="rectangle">
+			<stroke android:width="@dimen/general_border" android:color="@color/section_text" />
+			<solid android:color="#00FFFFFF" />
+		</shape>
+	</item>
+</layer-list>

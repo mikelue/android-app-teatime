@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/main_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+>
+	<RelativeLayout android:id="@+id/session_header"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+	>
+		<ImageView android:id="@id/session_icon" style="@style/session_icon" />
+
+		<EditText android:id="@id/text_session_name" style="@android:style/TextAppearance.Widget.EditText"
+			android:layout_height="wrap_content"
+			android:layout_width="220dp"
+			android:layout_centerVertical="true"
+			android:layout_toRightOf="@id/session_icon"
+			android:layout_marginLeft="@dimen/marging_in_item"
+
+			android:singleLine="true"
+			android:ellipsize="end"
+			android:maxLength="64"
+
+			android:paddingTop="2dp"
+			android:paddingBottom="2dp"
+			android:paddingLeft="8dp"
+			android:paddingRight="8dp"
+			android:textColor="@android:color/primary_text_dark_nodisable"
+
+			android:background="@drawable/edit_session_name_background"
+		/>
+
+		<ImageButton style="@style/icon_button"
+			android:id="@+id/button_remove_session"
+			android:layout_alignParentRight="true"
+			android:src="@drawable/remove"
+		/>
+	</RelativeLayout>
+
+	<idv.mikelue.teatime.view.ListViewForRounds xmlns:ml="http://andoird.mikelue.idv/teatime"
+		android:id="@+id/round_section"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/session_header"
+		android:layout_marginTop="2dp"
+		ml:bottombar_height="32"
+	/>
+
+	<LinearLayout
+		android:layout_height="31dp"
+		android:layout_width="match_parent"
+		android:layout_alignParentBottom="true"
+
+		android:orientation="horizontal"
+		android:gravity="center_vertical"
+		android:background="@drawable/bottom_bar_background"
+	>
+		<Button android:id="@+id/button_cancel" style="@style/button_at_bottom"
+			android:text="@string/button_cancel_session_edit"
+		/>
+
+		<ImageView android:src="@color/section_text"
+			android:layout_marginTop="2dp"
+			android:layout_width="1dp"
+			android:layout_height="18dp"
+		/>
+
+		<Button android:id="@+id/button_save" style="@style/button_at_bottom"
+			android:text="@string/button_save_session"
+		/>
+	</LinearLayout>
+</RelativeLayout>

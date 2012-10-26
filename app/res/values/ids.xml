@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<resources>
+	<item type="id" name="section_icon" />
+	<item type="id" name="session_icon" />
+
+	<item type="id" name="text_session_name" />
+	<item type="id" name="text_session_state" />
+
+	<item type="id" name="button_start_ticking" />
+	<item type="id" name="button_setting" />
+	<item type="id" name="button_add_round" />
+	<item type="id" name="button_remove_round" />
+
+	<item type="id" name="affect_successive_rounds" />
+
+	<item type="id" name="editor_minutes" />
+	<item type="id" name="editor_seconds" />
+</resources>

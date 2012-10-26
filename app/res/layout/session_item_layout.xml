@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/item_layout"
+	android:background="@drawable/session_item_background"
+>
+	<ImageView android:id="@id/session_icon" style="@style/session_icon" />
+
+	<HorizontalScrollView android:id="@+id/session_info"
+		android:layout_height="wrap_content"
+		android:layout_width="184dp"
+
+		android:layout_alignParentTop="true"
+		android:layout_marginTop="4dp"
+		android:layout_marginLeft="@dimen/marging_in_item"
+		android:layout_toRightOf="@id/session_icon"
+
+		android:scrollbarDefaultDelayBeforeFade="0"
+	>
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:orientation="vertical"
+		>
+			<TextView android:id="@id/text_session_name" style="@style/text_session_name"
+				android:layout_width="match_parent"
+			/>
+			<idv.mikelue.teatime.view.DigitalNumberTextView
+				android:id="@id/text_session_state" style="@style/text_session_state"
+				android:layout_width="match_parent"
+			/>
+		</LinearLayout>
+	</HorizontalScrollView>
+
+	<ImageButton android:id="@id/button_start_ticking" style="@style/icon_button"
+		android:layout_toLeftOf="@id/button_setting"
+        android:src="@drawable/start_ticking"
+		android:onClick="clickStartTicking"
+	/>
+	<ImageButton android:id="@id/button_setting" style="@style/icon_button"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/settings"
+		android:onClick="clickSetting"
+	/>
+</RelativeLayout>

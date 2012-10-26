@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="alarm_sound"
+        android:title="@string/preference_alarm_sound"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="alarm_vibration"
+        android:title="@string/preference_alarm_vibration"
+        android:defaultValue="true" />
+
+    <EditTextPreference
+        android:key="alarm_duration"
+        android:title="@string/preference_alarm_duration"
+		android:inputType="number"
+		android:maxLength="3"
+		android:defaultValue="8"
+	/>
+</PreferenceScreen>
+
