@@ -9,6 +9,10 @@
 		<relativePath>../</relativePath>
 	</parent>
 
+	<properties>
+		<android.manifest.debuggable>true</android.manifest.debuggable>
+	</properties>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>idv.mikelue</groupId>
     <artifactId>tea-time</artifactId>
@@ -47,4 +51,93 @@
 		</dependency>
 		<!-- :~) -->
 	</dependencies>
+
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>update-manifest</id>
+						<goals>
+							<goal>manifest-update</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+    </build>
+
+	<profiles>
+		<profile>
+			<id>google-play</id>
+			<properties>
+				<!--
+				  - 1. Turn the debug off
+				  - 2. Proguard the classes
+				  - 3. Zipalign the APK file
+				  -->
+				<android.manifest.debuggable>false</android.manifest.debuggable>
+				<android.proguard.skip>false</android.proguard.skip>
+				<android.sign.debug>false</android.sign.debug>
+				<android.zipalign.skip>false</android.zipalign.skip>
+				<android.zipalign.verbose>true</android.zipalign.verbose>
+				<android.file>${project.build.directory}/${project.artifactId}-signed-aligned.apk</android.file>
+				<!-- :~) -->
+
+				<!-- Skips the execution of test -->
+				<skipTests>true</skipTests>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jarsigner-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>signing</id>
+								<goals>
+									<goal>sign</goal>
+									<goal>verify</goal>
+								</goals>
+								<phase>package</phase>
+								<configuration>
+									<removeExistingSignatures>true</removeExistingSignatures>
+									<archiveDirectory />
+									<verbose>true</verbose>
+									<includes>
+										<include>target/*.apk</include>
+									</includes>
+									<arguments>
+										<argument>-sigalg</argument><argument>MD5withRSA</argument>
+										<argument>-digestalg</argument><argument>SHA1</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+						<artifactId>android-maven-plugin</artifactId>
+						<configuration>
+							<zipalign>
+								<outputApk>${android.file}</outputApk>
+							</zipalign>
+						</configuration>
+						<executions>
+							<execution>
+								<id>alignApk</id>
+								<phase>package</phase>
+								<goals>
+									<goal>zipalign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
