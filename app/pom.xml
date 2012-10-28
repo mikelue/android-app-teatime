@@ -21,12 +21,18 @@
     <name>tea-time</name>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>support-v4</artifactId>
+		</dependency>
+
 		<!--
 		  - Dependencies for mocked environment of testing
 		  -->
 		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>support-v4</artifactId>
+			<groupId>idv.mikelue.android</groupId>
+			<artifactId>jmockit</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
