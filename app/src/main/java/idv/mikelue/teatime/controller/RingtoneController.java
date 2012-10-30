@@ -68,10 +68,12 @@ public class RingtoneController {
 		}
 
 		if (vibrator != null) {
+			Log.d(TAG, "Start vibrating");
 			vibrator.vibrate(vibratePattern, 0);
 		}
 
 		if (!wakeLock.isHeld()) {
+			Log.d(TAG, "Acquire wake lock");
 			wakeLock.acquire();
 		}
 
