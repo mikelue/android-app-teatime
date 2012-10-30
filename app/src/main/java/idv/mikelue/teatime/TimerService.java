@@ -182,15 +182,6 @@ public class TimerService extends Service {
 		@Override
 		protected void onTick()
 		{
-			/**
-			 * Release the holding of device on
-			 */
-			if (!stillRunning() && wakeLock.isHeld()) {
-				Log.i(TAG, "Release the wake lock");
-				wakeLock.release();
-			}
-			// :~)
-
 			if (tickingPublisher.roundObserver == null) {
 				Set<TickingRound> endedRounds = getTickingPool().consumeEndedRounds();
 				if (endedRounds.size() == 0) {
@@ -221,6 +212,15 @@ public class TimerService extends Service {
 				}
 				// :~)
 			}
+
+			/**
+			 * Release the holding of device on
+			 */
+			if (!stillRunning() && wakeLock.isHeld()) {
+				Log.i(TAG, "Release the wake lock");
+				wakeLock.release();
+			}
+			// :~)
 		}
 
 		private int[] convertToIntArray(Set<TickingRound> endedRounds)
