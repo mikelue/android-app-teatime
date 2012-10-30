@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="idv.mikelue.teatime">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="101" android:versionName="1.01" package="idv.mikelue.teatime">
 
 	<uses-permission android:name="android.permission.VIBRATE"/>
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>

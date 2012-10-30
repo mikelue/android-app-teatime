@@ -16,7 +16,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>idv.mikelue</groupId>
     <artifactId>tea-time</artifactId>
-    <version>1.0</version>
+    <version>1.01</version>
     <packaging>apk</packaging>
     <name>tea-time</name>
 
