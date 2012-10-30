@@ -69,7 +69,7 @@
 
 			<!-- Dependencies for testing in mocked environment -->
 			<dependency>
-				<groupId>idv.mikelue.android</groupId>
+				<groupId>org.no-ip.mikelue.android</groupId>
 				<artifactId>jmockit</artifactId>
 				<version>${version.android.jmockit}</version>
 			</dependency>

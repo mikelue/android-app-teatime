@@ -30,7 +30,7 @@
 		  - Dependencies for mocked environment of testing
 		  -->
 		<dependency>
-			<groupId>idv.mikelue.android</groupId>
+			<groupId>org.no-ip.mikelue.android</groupId>
 			<artifactId>jmockit</artifactId>
 			<scope>test</scope>
 		</dependency>

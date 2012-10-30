@@ -2,7 +2,7 @@ package idv.mikelue.teatime.test;
 
 import org.testng.annotations.BeforeClass;
 
-import idv.mikelue.android.jmockit.MockLogToSlf4j;
+import org.no_ip.mikelue.android.jmockit.MockLogToSlf4j;
 
 /**
  * This base class provides mock environment of Andoird, which has following feature:
