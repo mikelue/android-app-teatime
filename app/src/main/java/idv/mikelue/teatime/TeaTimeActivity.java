@@ -121,6 +121,7 @@ public class TeaTimeActivity extends FragmentActivity {
 		Window window = getWindow();
 		window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 		window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 	}
 	private void initServiceController()
 	{
